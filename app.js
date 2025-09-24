@@ -44,11 +44,19 @@ app.get("/listings/:id",async(req,res)=>{
 });
 
 //create route
-app.post("/listings",async(req,res)=>{
-  let listing=req.body.listing;
-  console.log(listing);
-
+app.post("/listings", async (req, res) => {
+  const newListing = new Listing(req.body.listing); // Make sure form inputs are named listing[field]
+  await newListing.save(); 
+  res.redirect("/listings");
 });
+
+//Edit route
+app.get("/listings/:id/edit", async (req, res) => {
+  let { id } = req.params;
+  const listing = await Listing.findById(id);
+  res.render("listings/edit.ejs", { listing });
+});
+
 
 // app.get("/testListing", async (req, res) => {
 //   let sampleListing = new Listing({
