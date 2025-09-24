@@ -43,7 +43,6 @@ app.get("/listings", async (req, res) => {
 //   res.send("successful testing");
 // });
 
-app.listen(3000, (error) => {
-  console.log(error);
+app.listen(3000, () => {
   console.log("server is started");
 });
