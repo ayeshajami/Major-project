@@ -46,6 +46,9 @@ res.render("listings/new.ejs");
 //show route
 app.get("/listings/:id",async(req,res)=>{
   let {id}=req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).send("Invalid listing ID");
+  }
   const listing=await Listing.findById(id);
   res.render("listings/show.ejs",{listing});
 });
@@ -97,14 +100,17 @@ app.delete("/listings/:id", async (req, res) => {
 //   res.send("successful testing");
 // });
 
-app.all("*", (req, res, next) => {
-    next(new ExpressError(404, "Page Not Found"));
+// Catch-all 404 route (works in Express v5+)
+app.all(/.*/, (req, res, next) => {
+  next(new expressError(404, "Page Not Found"));
 });
 
-app.use((err,req,res,next)=>{
-  let{statusCode,message}=err;
+// Error handler
+app.use((err, req, res, next) => {
+  const { statusCode = 500, message = "Something went wrong" } = err;
   res.status(statusCode).send(message);
 });
+
 
 app.listen(8080, () => {
   console.log("server is started");
