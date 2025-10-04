@@ -8,16 +8,13 @@ const listingSchema=new Schema({
     },
     description:String,
   image: {
-  filename: {
+  filename: { type: String, default: "listingimage" },
+  url: {
     type: String,
-    default: "listingimage",
+    default: "https://via.placeholder.com/400x300.png?text=No+Image",
   },
- url: {
-  type: String,
-  default: "https://images.unsplash.com/photo-1598926955088-29ce45f35d5a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60",
 },
 
-},
 
 
     price:Number,
