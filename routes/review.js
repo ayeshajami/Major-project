@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express.Router({ mergeParams: true }); // 👈 important so :id from parent route is available
+const router = express.Router({ mergeParams: true }); 
 const wrapAsync = require("../utils/wrapAsync.js");
 const ExpressError = require("../utils/expressError.js");
 const { reviewSchema } = require("../schema.js");
@@ -16,12 +16,9 @@ const validateReview = (req, res, next) => {
   }
 };
 
-// ---------------------------
-// CREATE REVIEW
-// POST /listings/:id/reviews
-// ---------------------------
+
 router.post("/", validateReview, wrapAsync(async (req, res) => {
-  const { id } = req.params;   // 👈 we now correctly get id from parent route
+  const { id } = req.params;   
   let listing = await Listing.findById(id);
 
   if (!listing) {
